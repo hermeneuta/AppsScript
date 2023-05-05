@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <style>
+    //https://www.canva.com/colors/color-palettes/winter-sport/
+    :root {
+      --firstcol: #ECF1F2;
+      --secondcol: #7F7F7F;
+      --thirdcol: #F4D800;
+      --fourthcol: #050707;
+    }
+    body {
+      font-family: Garamond, serif;
+      //background-color: var(--fifthcol);
+      color: var(--fourthcol);
+    }
+    th {
+      border: 1px solid var(--thirdcol);
+      border-radius: 5px;
+      padding: 10px;
+    }
+    td {
+      padding: 10px;
+    }
+    .main_line {
+      background-color:var(--firstcol);
+      height:4px;
+    }
+    .main_title {
+      //color:var(--secondcol);
+      //font-size:25px
+    }
+    table {
+      border-spacing:0px;
+      //border:1px solid var(--fourthcol);
+      border-radius: 10px;
+    }
+    .table_titles {
+      //color:var(--secondcol);
+      //background-color: var(--fourthcol);
+      font-size:16px;
+      padding:5px;
+    }
+    .summary {
+      //background-color:var(--thirdcol);
+      font-weight:bold;
+      color: var(--fourthcol);
+      text-align:right;
+      font-size:14px;
+      border: 1px solid var(--fourthcol);
+    }
+
+    </style>
+  <body>
+
+    <div class="main_line"></div>
+    <? if (isPaid) { ?>
+       <div>
+         <h1 class="main_title">Wypłaty</h1>
+         <div style="margin-bottom:25px"></div>
+         <table >
+           <thead>
+             <tr class="table_titles">
+               <th style="border-radius:5px 0px 0px 0px"><?= faktura ?> </th>
+               <th><?= zlecono ?></th>
+               <th><?= rodzajUmowy ?> </th>
+               <th><?= rodzajKwoty ?> </th>
+               <th><?= opis ?></th>
+               <th><?= uwagi ?></th>
+               <th style="border-radius:0px 5px 0px 0px"><?= kwota ?></th>
+             </tr>
+           </thead>
+           <tbody>
+             
+               <? alreadyPaidValues.forEach((row, index) => { 
+                let color;
+                if (index % 2 === 0) {color = '#ECF1F2'} else {color = "#d5e9ed" }   
+              ?> 
+               <tr style="background-color:<?= color ?>;font-size:14px">
+               <td><?= row[0] ?></td>
+               <td style="text-align:center"><?= row[1] ?></td>
+               <td style="text-align:right"><?= row[2] ?></td>
+               <td style="text-align:right"><?= row[3] ?></td>
+               <td style="text-align:right"><?= row[5] ?></td>
+               <td style="text-align:right"><?= row[6] ?></td>
+               <td style="text-align:right"><?= row[4] ?></td>
+               </tr>
+               <? }) ?>
+
+           </tbody>
+           <tfoot>
+             <tr class="summary" >
+               <td style="background-color:var(--thirdcol)"></td><td style="background-color:var(--thirdcol)"></td><td style="background-color:var(--thirdcol)"></td><td style="background-color:var(--thirdcol)"></td><td style="background-color:var(--thirdcol)"></td><td>W sumie</td><td><?= totalPaid ?></td>
+
+             </tr>
+           </tfoot>
+
+         </table>
+      </div>
+      <? } else { ?> 
+       <div>
+         <h2 class="main_title">Brak nowych wypłat</h1>
+         <div style="margin-bottom:25px"></div>
+       </div>
+    <? } ?>
+
+      <? if (isWaiting) { ?>
+       <div>
+         <h1 class="main_title">Oczekujące</h1>
+         <div style="margin-bottom:25px"></div>
+         <table>
+           <thead>
+             <tr class="table_titles">
+               <th><?= opis ?></th>
+                <th><?= uwagi ?></th>
+               <th><?= rodzajUmowy ?> </th>
+               <th><?= rodzajKwoty ?> </th>
+                <th><?= kwota ?></th>
+             </tr>
+           </thead>
+           <tbody>
+             
+               <? waitingValues.forEach((row, index) => { 
+                let color;
+                if (index % 2 === 0) {color = "#ECF1F2"} else {color = "#d5e9ed" }   
+              ?> 
+               <tr style="background-color:<?= color ?>;font-size:14px">
+               <td><?= row[5] ?></td>
+               <td style="text-align:right"><?= row[6] ?></td>
+               <td style="text-align:right"><?= row[2] ?></td>
+               <td style="text-align:right"><?= row[3] ?></td>
+               <td style="text-align:right"><?= row[4] ?></td>
+               </tr>
+               <? }) ?>
+
+           </tbody>
+           <tfoot>
+             <tr class="summary">
+               <td style="background-color:var(--thirdcol)"></td><td style="background-color:var(--thirdcol)"></td><td style="background-color:var(--thirdcol)"></td><td>W sumie</td><td><?= totalWaiting ?></td>
+             </tr>
+           </tfoot>
+
+         </table>
+      </div>
+     <? } else { ?> 
+  <div>
+         <h2 class="main_title">Brak oczekujących wypłat</h1>
+         <div style="margin-bottom:25px"></div>
+  </div>
+ <? } ?>
+
+  </body>
+</html>
+
